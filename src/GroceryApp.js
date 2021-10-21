@@ -5,6 +5,7 @@ import { AppBar } from "@mui/material";
 import { Toolbar } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroceryList from "./GroceryList";
+import GroceryForm from "./GroceryForm";
 
 const GroceryApp = () => {
     const initialList = [
@@ -14,6 +15,17 @@ const GroceryApp = () => {
     ];
 
     const [groceries, setGroceries] = useState(initialList);
+
+    const addProduct = (newProduct) => {
+        setGroceries([
+            ...groceries,
+            {
+                id: 4,
+                product: newProduct,
+                completed: false,
+            },
+        ]);
+    };
 
     return (
         <Paper
@@ -39,6 +51,7 @@ const GroceryApp = () => {
                     GROCERY LIST
                 </Typography>
             </AppBar>
+            <GroceryForm addProduct={addProduct} />
             <GroceryList list={groceries} />
         </Paper>
     );
