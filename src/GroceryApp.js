@@ -6,6 +6,7 @@ import { Toolbar } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroceryList from "./GroceryList";
 import GroceryForm from "./GroceryForm";
+import { v4 as uuidv4 } from "uuid";
 
 const GroceryApp = () => {
     const initialList = [
@@ -20,11 +21,36 @@ const GroceryApp = () => {
         setGroceries([
             ...groceries,
             {
-                id: 4,
+                id: uuidv4(),
                 product: newProduct,
                 completed: false,
             },
         ]);
+    };
+
+    const removeProduct = (productId) => {
+        const updatedProduct = groceries.filter(
+            (product) => product.id !== productId
+        );
+        setGroceries(updatedProduct);
+    };
+
+    const toggleProduct = (productId) => {
+        const updatedProduct = groceries.map((product) =>
+            product.id === productId
+                ? { ...product, completed: !product.completed }
+                : product
+        );
+        setGroceries(updatedProduct);
+    };
+
+    const editProduct = (productId, newProduct) => {
+        const updatedProduct = groceries.map((product) =>
+            product.id === productId
+                ? { ...product, product: newProduct }
+                : product
+        );
+        setGroceries(updatedProduct);
     };
 
     return (
@@ -58,7 +84,12 @@ const GroceryApp = () => {
             >
                 <Grid item xs={11} md={8} lg={4}>
                     <GroceryForm addProduct={addProduct} />
-                    <GroceryList list={groceries} />
+                    <GroceryList
+                        list={groceries}
+                        removeProduct={removeProduct}
+                        toggleProduct={toggleProduct}
+                        editProduct={editProduct}
+                    />
                 </Grid>
             </Grid>
         </Paper>
