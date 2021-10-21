@@ -10,7 +10,7 @@ import GroceryForm from "./GroceryForm";
 const GroceryApp = () => {
     const initialList = [
         { id: 1, product: "Rice", completed: false },
-        { id: 2, product: "Apples", completed: false },
+        { id: 2, product: "Apples", completed: true },
         { id: 3, product: "Milk", completed: false },
     ];
 
@@ -51,8 +51,16 @@ const GroceryApp = () => {
                     GROCERY LIST
                 </Typography>
             </AppBar>
-            <GroceryForm addProduct={addProduct} />
-            <GroceryList list={groceries} />
+            <Grid
+                container
+                justifyContent="center"
+                style={{ marginTop: "1rem" }}
+            >
+                <Grid item xs={11} md={8} lg={4}>
+                    <GroceryForm addProduct={addProduct} />
+                    <GroceryList list={groceries} />
+                </Grid>
+            </Grid>
         </Paper>
     );
 };
