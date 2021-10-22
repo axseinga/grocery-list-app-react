@@ -1,8 +1,11 @@
-import { useState } from "react";
+import UseLocalStorageState from "./useLocalStorageState";
 import { v4 as uuidv4 } from "uuid";
 
 export default (initialList) => {
-    const [groceries, setGroceries] = useState(initialList);
+    const [groceries, setGroceries] = UseLocalStorageState(
+        "groceries",
+        initialList
+    );
 
     return {
         groceries,

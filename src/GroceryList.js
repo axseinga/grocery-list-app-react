@@ -12,8 +12,9 @@ const GroceryList = (props) => {
                     {props.list.map((item, i) => (
                         <>
                             <GroceryItem
-                                {...item}
                                 key={item.id}
+                                completed={item.completed}
+                                product={item.product}
                                 removeProduct={props.removeProduct}
                                 toggleProduct={props.toggleProduct}
                                 editProduct={props.editProduct}

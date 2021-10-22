@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import useGroceryState from "./hooks/useGroceryState";
 import { Typography } from "@mui/material";
 import { Paper } from "@mui/material";
@@ -7,21 +7,16 @@ import { Toolbar } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroceryList from "./GroceryList";
 import GroceryForm from "./GroceryForm";
+import { v4 as uuidv4 } from "uuid";
 
 const GroceryApp = () => {
-    const initialList = JSON.parse(
-        window.localStorage.getItem("groceries")
-    ) || [
-        { id: 1, product: "Rice", completed: false },
-        { id: 2, product: "Apples", completed: true },
-        { id: 3, product: "Milk", completed: false },
+    const initialList = [
+        { id: uuidv4(), product: "Rice", completed: false },
+        { id: uuidv4(), product: "Apples", completed: true },
+        { id: uuidv4(), product: "Milk", completed: false },
     ];
     const { groceries, addProduct, removeProduct, toggleProduct, editProduct } =
         useGroceryState(initialList);
-
-    useEffect(() => {
-        window.localStorage.setItem("groceries", JSON.stringify(groceries));
-    }, [groceries]);
 
     return (
         <Paper
