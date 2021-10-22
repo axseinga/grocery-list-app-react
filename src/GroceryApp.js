@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
+import useGroceryState from "./hooks/useGroceryState";
 import { Typography } from "@mui/material";
 import { Paper } from "@mui/material";
 import { AppBar } from "@mui/material";
@@ -6,52 +7,21 @@ import { Toolbar } from "@mui/material";
 import { Grid } from "@mui/material";
 import GroceryList from "./GroceryList";
 import GroceryForm from "./GroceryForm";
-import { v4 as uuidv4 } from "uuid";
 
 const GroceryApp = () => {
-    const initialList = [
+    const initialList = JSON.parse(
+        window.localStorage.getItem("groceries")
+    ) || [
         { id: 1, product: "Rice", completed: false },
         { id: 2, product: "Apples", completed: true },
         { id: 3, product: "Milk", completed: false },
     ];
+    const { groceries, addProduct, removeProduct, toggleProduct, editProduct } =
+        useGroceryState(initialList);
 
-    const [groceries, setGroceries] = useState(initialList);
-
-    const addProduct = (newProduct) => {
-        setGroceries([
-            ...groceries,
-            {
-                id: uuidv4(),
-                product: newProduct,
-                completed: false,
-            },
-        ]);
-    };
-
-    const removeProduct = (productId) => {
-        const updatedProduct = groceries.filter(
-            (product) => product.id !== productId
-        );
-        setGroceries(updatedProduct);
-    };
-
-    const toggleProduct = (productId) => {
-        const updatedProduct = groceries.map((product) =>
-            product.id === productId
-                ? { ...product, completed: !product.completed }
-                : product
-        );
-        setGroceries(updatedProduct);
-    };
-
-    const editProduct = (productId, newProduct) => {
-        const updatedProduct = groceries.map((product) =>
-            product.id === productId
-                ? { ...product, product: newProduct }
-                : product
-        );
-        setGroceries(updatedProduct);
-    };
+    useEffect(() => {
+        window.localStorage.setItem("groceries", JSON.stringify(groceries));
+    }, [groceries]);
 
     return (
         <Paper
@@ -68,14 +38,16 @@ const GroceryApp = () => {
                 position="static"
                 style={{ height: "50px" }}
             >
-                <Typography
-                    color="inherit"
-                    style={{
-                        padding: "1rem",
-                    }}
-                >
-                    GROCERY LIST
-                </Typography>
+                <Toolbar>
+                    <Typography
+                        color="inherit"
+                        style={{
+                            padding: "1rem",
+                        }}
+                    >
+                        GROCERY LIST
+                    </Typography>
+                </Toolbar>
             </AppBar>
             <Grid
                 container

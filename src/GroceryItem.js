@@ -19,7 +19,7 @@ const GroceryItem = ({
 }) => {
     const [isEditing, toggle] = useToggleState();
     return (
-        <ListItem>
+        <ListItem style={{ height: "60px" }}>
             {isEditing ? (
                 <EditGroceryForm
                     editProduct={editProduct}

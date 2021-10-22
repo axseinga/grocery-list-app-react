@@ -5,26 +5,26 @@ import { Divider } from "@mui/material";
 import GroceryItem from "./GroceryItem";
 
 const GroceryList = (props) => {
-    return (
-        <Paper>
-            <List>
-                {props.list.map((item) => (
-                    <>
-                        <GroceryItem
-                            id={item.id}
-                            product={item.product}
-                            key={item.id}
-                            completed={item.completed}
-                            removeProduct={props.removeProduct}
-                            toggleProduct={props.toggleProduct}
-                            editProduct={props.editProduct}
-                        />
-                        <Divider />
-                    </>
-                ))}
-            </List>
-        </Paper>
-    );
+    if (props.list.length)
+        return (
+            <Paper>
+                <List>
+                    {props.list.map((item, i) => (
+                        <>
+                            <GroceryItem
+                                {...item}
+                                key={item.id}
+                                removeProduct={props.removeProduct}
+                                toggleProduct={props.toggleProduct}
+                                editProduct={props.editProduct}
+                            />
+                            {i < props.list.length - 1 && <Divider />}
+                        </>
+                    ))}
+                </List>
+            </Paper>
+        );
+    return null;
 };
 
 export default GroceryList;
